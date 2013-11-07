@@ -1,0 +1,7 @@
+name: MongoRegister
+main: im.prox.MongoRegister.RegisterPlugin
+version: 0.1
+author: augustt198
+commands:
+  register:
+    description: Register your account

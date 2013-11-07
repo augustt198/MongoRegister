@@ -1,0 +1,7 @@
+database:
+  address: localhost
+  port: 27017
+  db: test
+  collection: test
+  usernamefield: username
+  emailfield: email
