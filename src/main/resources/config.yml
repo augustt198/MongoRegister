@@ -1,7 +1,6 @@
-database:
-  address: localhost
-  port: 27017
-  db: test
-  collection: test
-  usernamefield: username
-  emailfield: email
+dbaddress: localhost
+dbport: 27017
+dbname: test
+collectionname: test
+usernamefield: username
+emailfield: email

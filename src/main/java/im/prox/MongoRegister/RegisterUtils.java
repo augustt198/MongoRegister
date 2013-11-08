@@ -6,7 +6,7 @@ import com.mongodb.DBCursor;
 public class RegisterUtils {
 
 	public static boolean playerExists(RegisterPlugin plugin, String username){
-		String usernamefield = plugin.getConfig().getString("database.usernamefield");
+		String usernamefield = plugin.getConfig().getString("usernamefield");
 		
 		BasicDBObject query = new BasicDBObject(usernamefield, username);
 		DBCursor cursor = plugin.getCollection().find(query);
@@ -18,24 +18,25 @@ public class RegisterUtils {
 	}
 	
 	public static boolean emailExists(RegisterPlugin plugin, String username){
-		String usernamefield = plugin.getConfig().getString("database.usernamefield");
-		String emailfield = plugin.getConfig().getString("database.emailfield");
+		String usernamefield = plugin.getConfig().getString("usernamefield");
+		String emailfield = plugin.getConfig().getString("emailfield");
 		BasicDBObject query = new BasicDBObject(usernamefield, username);
 		query.put(emailfield, null);
 		
 		DBCursor cursor = plugin.getCollection().find(query);
 		
 		if(cursor.hasNext()){
-			return true;
+			return false;
 		}
-		return false;
+		return true;
 	}
 	
 	public static void updateEmail(RegisterPlugin plugin, String username, String email){
-		String usernamefield = plugin.getConfig().getString("database.usernamefield");
+		String usernamefield = plugin.getConfig().getString("usernamefield");
+		String emailfield = plugin.getConfig().getString("emailfield");
 		BasicDBObject match = new BasicDBObject(usernamefield, username);
-		BasicDBObject change = new BasicDBObject(plugin.getConfig().getString("database.emailfield"), email);
-		plugin.getCollection().update(match, change);
+		BasicDBObject update = new BasicDBObject("$set", new BasicDBObject(emailfield, email));
+		plugin.getCollection().update(match, update);
 	}
 	
 	

@@ -17,10 +17,12 @@ public class RegisterPlugin extends JavaPlugin{
 	public MongoClient mongo;
 	
 	public void onEnable(){
+		plugin = this;
 		getCommand("register").setExecutor(new RegisterCommand(this));
 		
-		String address = plugin.getConfig().getString("database.address");
-		int port = plugin.getConfig().getInt("database.port");
+		String address = plugin.getConfig().getString("dbaddress");
+		
+		int port = plugin.getConfig().getInt("dbport");
 		Log.info("Connecting to database at "+address+":"+port);
 		try {
 			mongo = new MongoClient(address, port);
@@ -28,6 +30,7 @@ public class RegisterPlugin extends JavaPlugin{
 			Log.severe("Unable to connect to database!");
 			e.printStackTrace();
 		}
+		
 	}
 	
 	public void onDisable(){
@@ -35,8 +38,8 @@ public class RegisterPlugin extends JavaPlugin{
 	}
 	
 	public DBCollection getCollection(){
-		String dbName = plugin.getConfig().getString("database.db");
-		String collectionName = plugin.getConfig().getString("database.collection");
+		String dbName = plugin.getConfig().getString("dbname");
+		String collectionName = plugin.getConfig().getString("collectionname");
 		return mongo.getDB(dbName).getCollection(collectionName);
 	}
 	
