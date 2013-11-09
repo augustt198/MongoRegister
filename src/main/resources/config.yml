@@ -4,3 +4,4 @@ dbname: test
 collectionname: test
 usernamefield: username
 emailfield: email
+addplayer: false

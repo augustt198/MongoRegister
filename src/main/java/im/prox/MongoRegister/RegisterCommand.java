@@ -4,8 +4,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
-import org.apache.commons.validator.routines.EmailValidator;;
 
 public class RegisterCommand implements CommandExecutor {
 
@@ -17,6 +17,10 @@ public class RegisterCommand implements CommandExecutor {
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+		if(!(sender instanceof Player)){
+			sender.sendMessage(ChatColor.RED + "You must be a player to execute this command!");
+			return false;
+		}
 		if(args.length > 1){
 			sender.sendMessage(ChatColor.RED + "Too many arguments!");
 			Usage(sender);
@@ -27,7 +31,7 @@ public class RegisterCommand implements CommandExecutor {
 			Usage(sender);
 			return false;
 		}
-		if(!EmailValidator.getInstance().isValid(args[0])){
+		if(!RegisterUtils.validateEmail(args[0])){
 			sender.sendMessage(ChatColor.RED + "Invalid email!");
 			return false;
 		}

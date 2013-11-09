@@ -4,6 +4,7 @@ import java.net.UnknownHostException;
 
 import im.prox.MongoRegister.Log;
 
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.mongodb.DBCollection;
@@ -18,6 +19,13 @@ public class RegisterPlugin extends JavaPlugin{
 	
 	public void onEnable(){
 		plugin = this;
+		String addPlayer = plugin.getConfig().getString("addplayer");
+		if(addPlayer == "true"){
+			PluginManager pm = getServer().getPluginManager();
+			pm.registerEvents(new RegisterListener(this), this);
+			Log.info("Adding players on login enabled!");
+		}
+		
 		getCommand("register").setExecutor(new RegisterCommand(this));
 		
 		String address = plugin.getConfig().getString("dbaddress");
